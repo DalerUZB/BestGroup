@@ -1,32 +1,37 @@
 import { useState } from 'react'
 import styled from 'styled-components'
+import Tasks from './Tasks'
 
-const WorkColumn = ({ item }) => {
-
-    const testFunc = () => {
-        console.log('input qoshilish kire');
-    }
+const WorkColumn = ({ task, canValue }) => {
     const [btnTrue, setBtnTrue] = useState(false)
-
+    const [savedValue, setSavedValue] = useState("")
     return (
         <WorkForColumn >
             <div className='title__div'>
-                <h3>{item.title}</h3>
-                <span>{item.count}</span>
+                <h3>{task.title}</h3>
+                <span>{task.count}</span>
             </div>
+
+
+
 
             {btnTrue ? (
                 <div className='resultsInput'>
-                    <input type="text" className='input' />
+                    <input type="text" className='input' onKeyUp={({ target }) => setSavedValue(target.value)} />
                     <div className='btnsInfo'>
                         <button className='btnCancel' onClick={() => setBtnTrue(false)}>Cancel</button>
-                        <button className='btnSave'>Save</button>
+                        <button className='btnSave' onClick={() => canValue({
+                            inputValue: savedValue,
+                            taskId: task.id
+                        })}>Save</button>
                     </div>
 
                 </div>
             ) : (<div className='addBtn'>
                 <button onClick={() => setBtnTrue(true)}>+</button>
             </div>)}
+
+
 
 
 
